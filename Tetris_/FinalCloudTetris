@@ -7,6 +7,7 @@ blocks(set)=2
 
 //2016-08-27 20:38
 //코드가 엉켜 새로운 3번째 테트리스 제작
+//new_block(); 오류
 
 #include <stdio.h>
 #include <stdlib.h>
