@@ -1,5 +1,7 @@
+#pragma once
+
 // type turn y x
-boolean TetrominoLibrary[7][4][4][4]= {
+bool TetrominoLibrary[7][4][4][4]= {
 	{ // SQUARE
 		{
 			0, 0, 0, 0,
@@ -127,7 +129,7 @@ boolean TetrominoLibrary[7][4][4][4]= {
 			0,1,0,0,
 			0,1,0,0,
 			0,1,1,0
-		,}
+		},
 		
 		{
 			0,0,0,0,
@@ -175,7 +177,7 @@ boolean TetrominoLibrary[7][4][4][4]= {
 		},
 		
 		{
-			0,0,0,0
+			0,0,0,0,
 			1,0,0,0,
 			1,1,1,0,
 			0,0,0,0

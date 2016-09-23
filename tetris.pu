@@ -1,0 +1,74 @@
+@startuml
+
+Game <|.. Tetris
+
+Tetris *--> Tetromino
+Tetris *--> Tetrion
+Tetris *--> Stack
+Tetris *--> Playfield
+Tetris o--> Console
+
+Component <|.. Tetromino
+Component <|.. Tetrion
+Component <|.. Stack
+Component o--> Playfield
+
+class Game {
+    + init()
+    + update()
+    + render()
+    + release()
+}
+
+class Console {
+    - width: int
+    - height: int
+
+    + render()
+}
+
+class Component {
+    # x: int
+    # y: int
+    # w: int
+    # h: int
+    # canvas: Playfield *
+    # data: bool *
+
+    + sketch()
+}
+
+class Tetris {
+    - tetromino: Tetromino
+    - tetrion: Tetrion
+    - stack: Stack
+    - playfield: Playfield
+    - console: Console *
+}
+
+class Tetromino {
+    - color: enum Color
+    - type: enum Type
+
+    + move(enum Direction)
+    + hardDrop()
+    + lock()
+    + rotate()
+}
+
+class Tetrion {
+
+}
+
+class Stack {
+    + clearLine()
+}
+
+class Playfield {
+    + frontBuffer: bool []
+    + backBuffer: bool []
+
+    + flipBuffer()
+}
+
+@enduml

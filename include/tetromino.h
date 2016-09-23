@@ -1,4 +1,16 @@
 #pragma once
+
+#include "playfield.h"
+#include "component.h"
+
+enum Direction {
+	UP = 72,
+	DOWN = 80,
+	LEFT = 75,
+	RIGHT = 77,
+	ESC = 27
+};
+
 enum TetrominoType {
 	SQUARE,
 	BAR,
@@ -7,13 +19,6 @@ enum TetrominoType {
 	R_GUN,
 	L_GUN,
 	T_SHAPE
-};
-
-enum Direction {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
 };
 
 enum Color {
@@ -32,9 +37,10 @@ enum Color {
 	YELLOW
 };
 
-class Tetromino {
+class Tetromino : Component {
 public:
 	Tetromino();
+	~Tetromino();
 	
     void move(enum Direction dir);
     void rotate();
@@ -45,11 +51,12 @@ public:
     void setColor(enum Color color);
     enum Color getColor();
     
-    void draw();
-    
+    void setVisibility(bool isVisible);
+    bool collidesWith(Playfield playfield);
+	enum Direction revertDir(enum Direction dir);
+	
 private:
-
 	
     enum TetrominoType type;
-    enum Color color;
+    enum Color color;    
 };

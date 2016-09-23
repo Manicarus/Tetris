@@ -1,16 +1,19 @@
 #include <iostream>
 
-#include "bucket.h"
-#include "cursor.h"
+#include "stack.h"
+#include <windows.h>
 
 #define	O	true
 #define	X	false
 
-Bucket::Bucket() {
-	for(int rowIndex = TOP_ROW; rowIndex < ROW_NUM; rowIndex++) {
+Stack::Stack() {
+	x = 2;
+	y = 2;
+	
+	for(int rowIndex = CEILING; rowIndex < ROW_NUM; rowIndex++) {
 		layer[rowIndex] = new bool [COL_NUM];
 		
-		if(rowIndex == BOTTOM_ROW) {
+		if(rowIndex == FLOOR || rowIndex == CEILING) {
 			for(int colIndex = 0; colIndex < COL_NUM; colIndex++) {
 				layer[rowIndex][colIndex] = O;
 			}
@@ -24,38 +27,38 @@ Bucket::Bucket() {
 	}
 }
 
-Bucket::~Bucket() {
-	for(int rowIndex = TOP_ROW; rowIndex < ROW_NUM; rowIndex++) {
+Stack::~Stack() {
+	for(int rowIndex = CEILING; rowIndex < ROW_NUM; rowIndex++) {
 		delete layer[rowIndex];
 	}
 }
 
-void Bucket::clear() {
-	for(int rowIndex = TOP_ROW; rowIndex < ROW_NUM; rowIndex++) {
+void Stack::clear() {
+	for(int rowIndex = CEILING; rowIndex < ROW_NUM; rowIndex++) {
 		if(isLayerFull(rowIndex)) {
 			clearLayer(rowIndex);
 		}
 	}
 }
 
-void Bucket::draw(Cursor cursor) {
-	for(int rowIndex = TOP_ROW; rowIndex < ROW_NUM; rowIndex++) {
-		drawLayer(rowIndex, cursor);
+void Stack::draw() {
+	for(int rowIndex = CEILING; rowIndex < ROW_NUM; rowIndex++) {
+		drawLayer(rowIndex);
 	}
 }
 
-void Bucket::drawLayer(int row, Cursor cursor) {
+void Stack::drawLayer(int row) {
+	
 	for(int colIndex = 0; colIndex < COL_NUM; colIndex++) {
-		cursor.move(colIndex, row);
-		if(layer[row][colIndex] == O) {
-			std::cout << "в╠" << std::endl;
-		} else {
-			std::cout << "  " << std::endl;
+		if(layer[row][colIndex]) {
+			COORD cursorPos = {2 * (x + colIndex), y + row};
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos);
+			std::cout << "бс" << std::endl;
 		}
 	}
 }
 
-void Bucket::clearLayer(int row) {
+void Stack::clearLayer(int row) {
 	int upperRowIndex;
 	
 	delete layer[row];
@@ -65,16 +68,16 @@ void Bucket::clearLayer(int row) {
 		layer[rowIndex] = layer[upperRowIndex];
 	}
 	
-	layer[TOP_ROW] = new bool [COL_NUM];
+	layer[CEILING] = new bool [COL_NUM];
 	
-	layer[TOP_ROW][0] = O;	
+	layer[CEILING][0] = O;	
 	for(int colIndex = 1; colIndex < RIGHTMOST_COL; colIndex++) {
-		layer[TOP_ROW][colIndex] = X;
+		layer[CEILING][colIndex] = X;
 	}		
-	layer[TOP_ROW][RIGHTMOST_COL] = O;
+	layer[CEILING][RIGHTMOST_COL] = O;
 }
 
-bool Bucket::isLayerFull(int row) {
+bool Stack::isLayerFull(int row) {
 	for(int colIndex = 0; colIndex < COL_NUM; colIndex++) {
 		if(layer[row][colIndex]) {
 			return false;

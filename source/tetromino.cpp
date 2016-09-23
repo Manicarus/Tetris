@@ -1,7 +1,10 @@
 #include <ctime>
 #include <cstdlib>
+#include <iostream>
 
 #include "tetromino.h"
+#include "common.h"
+#include "windows.h"
 
 Tetromino::Tetromino() {
     srand(static_cast<unsigned int>(time(NULL)));
@@ -13,6 +16,13 @@ Tetromino::Tetromino() {
     
     type = SQUARE;
     color = YELLOW;
+    
+    x = 4;
+    y = 4;
+}
+
+Tetromino::~Tetromino() {
+	
 }
 
 void Tetromino::setType(enum TetrominoType _type) {
@@ -31,25 +41,43 @@ enum Color Tetromino::getColor() {
     return color;
 }
 
-void Tetromino::draw()
-{
-	
+void Tetromino::setVisibility(bool isVisible) {
+	for(int i = 0; i < 4; i++) {
+		for(int j = 0; j < 4; j++) {
+			if(TetrominoLibrary[type][0][i][j]) {
+				COORD cursorPos = {2 * (x + i), y + j};
+				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos);
+				std::cout << (isVisible ? "¢Ã": " ") << std::endl;
+			}
+		}
+	}
 }
 
-//bool Tetromino::checkCollision(float x, float y, float z) {
-//    for(int i = 0; i < 4; i++) {
-//        for(int j = 0; j < boundary.element.size(); j++) {
-//            if(boundary.element.at(j).center[0] == (element[i].center[0] + x)
-//               && boundary.element.at(j).center[1] == (element[i].center[1] + y)
-//               && boundary.element.at(j).center[2] == (element[i].center[2] + z)) {
-//                return true;
-//            }
-//        }
-//    }
-//    
-//    return false;
-//}
-//
+bool Tetromino::collidesWith(Playfield playfield) {
+    for(int i = 0; i < 4; i++) {
+        for(int j = 0; j < 4; j++) {
+			if(TetrominoLibrary[type][0][i][j] && playfield.layer[-playfield.y + y + i][-playfield.x + x + j]) {
+				return true;
+			}
+        }
+    }
+    
+    return false;
+}
+
+enum Direction Tetromino::revertDir(enum Direction dir) {
+	switch(dir) {
+		case UP:
+			return DOWN;
+		case DOWN:
+			return UP;
+		case LEFT:
+			return RIGHT;
+		case RIGHT:
+			return LEFT;
+	}
+}
+
 //bool Tetromino::checkRotCollision() {
 //    float tmpY, tmpZ;
 //
@@ -71,83 +99,19 @@ void Tetromino::move(enum Direction dir) {
 	// Originally made by yoonki1207
 	switch(dir) {
 		case LEFT:
-			if(enable_move_left) {
-				for(int i = 0; i < 4; i++) {
-					for(int j = 0; j < 4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i-1]=1;
-						}
-					}
-				}
-				b_x--;
-			}
+			x--;
 			break;
 
 		case RIGHT:
-			if(enable_move_right) {
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i+1]=1;
-						}
-					}
-				}
-				b_x++;
-			}
+			x++;
 			break;
 
 		case DOWN:
-			if(enable_move_down) {
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j+1][b_x+i]=1;
-						}
-					}
-				}
-				b_y++;
-			}
+			y++;
 			break;
 
 		case UP:
-			if(enable_move_up==1) {
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				b_turn=(b_turn+1)%4;
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=1;
-						}
-					}
-				}
-			}
+			y--;
 			break;
 	}
 }
