@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __TETRIS_H__
+#define __TETRIS_H__
+
 #include "console.h"
 #include <conio.h>
 #include "game.h"
@@ -12,14 +14,18 @@ class Tetris : Game{
 public:
 	Tetris();
 	bool isArrowInput(int keyboardInput);
-	
+	void update();
+	void render();
+
 private:
 	Tetromino tetromino;
 	Tetrion tetrion;
 	Stack stack;
 	Playfield playfield;
-//	Console *console;
+	Console *console;
 };
+
+#endif
 
 // When you have trouble thinking of good names for objects,
 // refer to glossary of the game.

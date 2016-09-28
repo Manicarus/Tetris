@@ -1,32 +1,12 @@
-#include "component.h"
+#include "../header/component.h"
+#include <iostream>
+#include <cstdlib>
 
-Componenet::Component() {
-	x = 0; y = 0;
-	w = 0; h = 0;
-	canvas = nullptr;
-}
+Component::Component(
+	Component::Coordinate coordinate = {0, 0}, 
+	Component::Dimension dimension = {0, 0}, 
+) : position(coordinate), size(dimension) { }
 
-Component::Component(Playfield *playfield) {
-	Component();
-	canvas = playfield;
-}
-
-void Component::sketch() {
-	int pos;
-	int dataSize = w * h;
-	
-	try {
-		if(canvas == nullptr) {
-			throw "No canvas initialized";
-		}
-		
-		for(int i = 0; i < dataSize; i++) {
-			pos = (x + i % w) + (y + i / w) * w;
-			canvas[pos] = data[i];
-		}
-	} catch (char *errStr) {
-		system("cls");
-		std::cout << errStr << std::endl;
-		exit(0);
-	}
+int Component::getSize() {
+	return size.width * size.height;
 }

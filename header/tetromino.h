@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __TETROMINO_H__
+#define __TETROMINO_H__
 
 #include "playfield.h"
 #include "component.h"
@@ -37,9 +38,9 @@ enum Color {
 	YELLOW
 };
 
-class Tetromino : Component {
+class Tetromino : public Imaginary {
 public:
-	Tetromino();
+	Tetromino(Playfield *);
 	~Tetromino();
 	
     void move(enum Direction dir);
@@ -60,3 +61,5 @@ private:
     enum TetrominoType type;
     enum Color color;    
 };
+
+#endif

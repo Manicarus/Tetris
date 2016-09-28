@@ -1,11 +1,34 @@
-#include "console.h"
+#include "../header/console.h"
+#include <sstream>
+#include <cstdlib>
 
-Console::Console() {
-	system("mode con:cols=100 lines=30");
-	system("title Tetris");
+Console::Console(
+	std::string title, 
+	Dimension dimension = {100, 30}
+) : size(dimension) {
+	std::string conTitleStr("title ");
+	conTitleStr.append(title);
+
+	std::string conDimStr("mode con:");
+
+	std::string conWidthStr = "cols=";
+	std::stringstream ss;
+	ss << width;
+	conWidthStr.append(ss.str());
+
+	ss.str("");
+	std::string conHeightStr = " lines=";
+	ss << height;
+	conHeightStr.append(ss.str());
+
+	conDimStr.append(conWidthStr);
+	conDimStr.append(conHeightStr);
+
+	system(conDimStr.c_str());
+	system(conTitleStr.c_str());
 }
 
-void Console::render() { 
+void Console::render() {
 
 }
 

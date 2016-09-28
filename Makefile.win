@@ -1,0 +1,37 @@
+# Project: Tetris
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = source/component.o source/playfield.o source/tetromino.o testbench/tb_tetromino.o
+LINKOBJ  = source/component.o source/playfield.o source/tetromino.o testbench/tb_tetromino.o
+LIBS     = -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+INCS     = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = Tetris.exe
+CXXFLAGS = $(CXXINCS) -g3 -std=c++11
+CFLAGS   = $(INCS) -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+source/component.o: source/component.cpp
+	$(CPP) -c source/component.cpp -o source/component.o $(CXXFLAGS)
+
+source/playfield.o: source/playfield.cpp
+	$(CPP) -c source/playfield.cpp -o source/playfield.o $(CXXFLAGS)
+
+source/tetromino.o: source/tetromino.cpp
+	$(CPP) -c source/tetromino.cpp -o source/tetromino.o $(CXXFLAGS)
+
+testbench/tb_tetromino.o: testbench/tb_tetromino.cpp
+	$(CPP) -c testbench/tb_tetromino.cpp -o testbench/tb_tetromino.o $(CXXFLAGS)

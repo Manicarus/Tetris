@@ -1,8 +1,12 @@
-#pragma once
+#ifndef __GAME_H__
+#define __GAME_H__
 
 class Game {
-	virtual void init() = 0;
+public:
+	Game();
+	~Game();
 	virtual void update() = 0;
 	virtual void render() = 0;
-	virtual void release() = 0;
 };
+
+#endif

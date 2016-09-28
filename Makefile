@@ -1,16 +1,16 @@
 SHELL = /bin/sh
 
-CPP = g++ -g
-HDIR = ./include/
-SDIR = ./src/
+CPP = g++
+HDIR = ./include
+SDIR = ./source
 EXEC = Tetris
 #OBJECTS =
-TESTBENCH = game
-TBDIR = ./lab/
+TESTBENCH = console
+TBDIR = ./lab
 
 all:
 
 test:
-	
+	$(CPP) -g $(TBDIR)/tb_$(TESTBENCH).cpp $(SDIR)/$(TESTBENCH).cpp
 
 clean:
