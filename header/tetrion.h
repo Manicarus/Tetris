@@ -1,6 +1,6 @@
-#include "component.h"
+#include "imaginary.h"
 
-class Tetrion : public Component {
+class Tetrion : public Imaginary {
 public:
-	Tetrion(Playfield *playfield);
+	Tetrion(Buffer *, Measure, Coordinate);
 };

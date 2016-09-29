@@ -23,7 +23,7 @@ public:
 
 private:
 
-	void clearLayer(int row);
+	void clearLin(int row);
 	bool isLayerFull(int row);
 	void drawLayer(int row);
 };

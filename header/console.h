@@ -9,9 +9,9 @@
 class Console : Component {
 protected:
 	Buffer buffer;
-	
+
 public:
-	Console(std::string, Dimension);
+	Console(std::string, Measure);
 	void render();
 };
 

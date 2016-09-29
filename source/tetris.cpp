@@ -2,14 +2,31 @@
 #include <iostream>
 #include <cstdlib>
 
-Tetris::Tetris() {
+Tetris::Tetris(Console *console) {
+	this->console = console;
+	tetromino = new Tetromino(console.buffer);
+	tetrion = new Tetrion(console.buffer);
+	stack = new Stack(console.buffer);
+}
 
+Tetris::~Tetris() {
+	tetromino.~Tetromino();
+	delete tetromino;
+
+	tetrion.~Tetrion();
+	delete tetrion;
+
+	stack.~Stack();
+	delete stack;
 }
 
 void Tetris::render() {
 	// tetromino.setVisibility(true);
+	tetromino.sketch();
+	tetrion.sketch();
+	stack.sketch();
+	console.render();
 }
-
 
 void Tetris::update() {
 

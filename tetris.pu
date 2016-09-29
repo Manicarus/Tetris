@@ -1,17 +1,31 @@
 @startuml
 
+skinparam linetype ortho
+/'left to right direction'/
+/'top to bottom direction'/
+/'skinparam linetype polyline'/
+
 Game <|.. Tetris
 
 Tetris *--> Tetromino
 Tetris *--> Tetrion
 Tetris *--> Stack
-Tetris *--> Playfield
 Tetris o--> Console
 
-Component <|.. Tetromino
-Component <|.. Tetrion
-Component <|.. Stack
-Component o--> Playfield
+Imaginary <|-- Tetromino
+Imaginary <|-- Tetrion
+Imaginary <|-- Stack
+
+Console *--> Buffer
+
+Component <|-- Imaginary
+Imaginary o--> Buffer
+
+Coordinate *--> Component
+Measure *--> Component
+
+Component <|-- Console
+Component <|-- Buffer
 
 class Game {
     + init()
@@ -21,20 +35,27 @@ class Game {
 }
 
 class Console {
-    - width: int
-    - height: int
-
     + render()
 }
 
 class Component {
-    # x: int
-    # y: int
-    # w: int
-    # h: int
-    # canvas: Playfield *
-    # data: bool *
+    # position: Coordinate
+    # size: Measure
+    # data: void *
+}
 
+class Coordinate {
+    - x: int
+    - y: int
+}
+
+class Measure {
+    - width: int
+    - height: int
+}
+
+class Imaginary {
+    # playfield: Buffer *
     + sketch()
 }
 
@@ -42,7 +63,6 @@ class Tetris {
     - tetromino: Tetromino
     - tetrion: Tetrion
     - stack: Stack
-    - playfield: Playfield
     - console: Console *
 }
 
@@ -64,11 +84,12 @@ class Stack {
     + clearLine()
 }
 
-class Playfield {
-    + frontBuffer: bool []
-    + backBuffer: bool []
+class Buffer {
+    - front: bool *
+    - back: bool *
 
-    + flipBuffer()
+    + flip()
+    + setData(pos: int, data: bool)
 }
 
 @enduml

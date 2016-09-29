@@ -1,18 +1,23 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
-#include <windows.h>
 
 #include "../header/tetromino.h"
 #include "../header/common.h"
 
-Tetromino::Tetromino(Playfield *playfield) 
-: Component({0, 0}, {4, 4}, playfield) {
+// TODOs:
+// 1. Parameterize measure with MACRO VARIABLE
+
+Tetromino::Tetromino(
+    Buffer *buffer = NULL,
+    Measure measure = {4, 4},
+    Coordinate coordinate = {0, 0}
+) : Imaginary(buffer, measure, coordinate) {
     srand(static_cast<unsigned int>(time(NULL)));
 
     setType((enum TetrominoType)(rand() % 7));
     setColor((enum Color)(rand() % 7));
-    
+
     Component::data = TetrominoLibrary[type][0][0];
 }
 
@@ -48,17 +53,17 @@ enum Color Tetromino::getColor() {
 //	}
 //}
 
-bool Tetromino::collidesWith(Playfield playfield) {
-    for(int i = 0; i < 4; i++) {
-        for(int j = 0; j < 4; j++) {
-			// if(TetrominoLibrary[type][0][i][j] && playfield.layer[-playfield.y + y + i][-playfield.x + x + j]) {
-			// 	return true;
-			// }
-        }
-    }
-
-    return false;
-}
+// bool Tetromino::collidesWith(Playfield playfield) {
+//     for(int i = 0; i < 4; i++) {
+//         for(int j = 0; j < 4; j++) {
+// 			// if(TetrominoLibrary[type][0][i][j] && playfield.layer[-playfield.y + y + i][-playfield.x + x + j]) {
+// 			// 	return true;
+// 			// }
+//         }
+//     }
+//
+//     return false;
+// }
 
 enum Direction Tetromino::revertDir(enum Direction dir) {
 	switch(dir) {

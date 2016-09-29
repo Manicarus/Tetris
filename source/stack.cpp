@@ -58,7 +58,7 @@ void Stack::drawLayer(int row) {
 	}
 }
 
-void Stack::clearLayer(int row) {
+void Stack::clearLine(int row) {
 	int upperRowIndex;
 
 	delete layer[row];

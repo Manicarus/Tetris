@@ -7,22 +7,19 @@ protected:
 		int x;
 		int y;
 	};
-	
-	struct Dimension {
+
+	struct Measure {
 		int width;
 		int height;
 	};
-	
+
 	Coordinate position;
-	Dimension size;
+	Measure size;
 	void *data;
-	
+
 public:
-	Component(
-		Coordinate coordinate, 
-		Dimension dimension, 
-	);
-	
+	Component(Measure, Coordinate);
+
 	int getSize();
 };
 

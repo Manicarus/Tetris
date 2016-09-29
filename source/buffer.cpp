@@ -2,16 +2,16 @@
 #include <cstdlib>
 
 Buffer::Buffer(
-	Coordinate coordinate = {0, 0},
-	Dimension dimension = {0, 0}
-) : Component(coordinate, dimension) {
+	Measure measure = {0, 0},
+	Coordinate coordinate = {0, 0}
+) : Component(measure, coordinate) {
 	data = new bool[2 *getSize()];
-	
-	front = data
+
+	front = (bool *)data;
 	for(int i = 0; i < getSize(); i++) {
 		*(front + i) = false;
 	}
-	
+
 	back  = front + getSize();
 	for(int i = 0; i < getSize(); i++) {
 		*(back + i) = false;
@@ -20,16 +20,16 @@ Buffer::Buffer(
 
 Buffer::~Buffer() {
 	if(data != NULL) {
-		delete data;
+		delete (bool *)data;
 	}
 }
 
 int Buffer::getSize(){
-	return width * height;
+	return size.width * size.height;
 }
 
 int Buffer::getWidth() {
-	return width;
+	return size.width;
 }
 
 void Buffer::setData(int pos, bool data) {
@@ -42,5 +42,3 @@ void Buffer::flip() {
 	front = back;
 	back = tmpBuffer;
 }
-
-

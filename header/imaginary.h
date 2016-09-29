@@ -4,11 +4,16 @@
 #include "component.h"
 #include "buffer.h"
 
-class Imaginary : Component{
+class Imaginary : public Component{
 protected:
 	Buffer *playfield;
-		
+
 public:
+	Imaginary(
+		Buffer *,
+		Measure,
+		Coordinate
+	);
 	void sketch();
 };
 

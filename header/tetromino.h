@@ -1,8 +1,7 @@
 #ifndef __TETROMINO_H__
 #define __TETROMINO_H__
 
-#include "playfield.h"
-#include "component.h"
+#include "imaginary.h"
 
 enum Direction {
 	UP = 72,
@@ -40,26 +39,30 @@ enum Color {
 
 class Tetromino : public Imaginary {
 public:
-	Tetromino(Playfield *);
+	Tetromino(
+		Buffer *,
+		Measure,
+	    Coordinate
+	);
 	~Tetromino();
-	
+
     void move(enum Direction dir);
     void rotate();
-    
+
     void setType(enum TetrominoType type);
     enum TetrominoType getType();
-    
+
     void setColor(enum Color color);
     enum Color getColor();
-    
+
     void setVisibility(bool isVisible);
-    bool collidesWith(Playfield playfield);
+    // bool collidesWith(Playfield playfield);
 	enum Direction revertDir(enum Direction dir);
-	
+
 private:
-	
+
     enum TetrominoType type;
-    enum Color color;    
+    enum Color color;
 };
 
 #endif

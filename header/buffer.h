@@ -7,9 +7,9 @@ class Buffer : public Component{
 private:
 	bool *front;
 	bool *back;
-			
-public:	
-	Buffer(Coordinate, Dimension);
+
+public:
+	Buffer(Dimension, Coordinate);
 	~Buffer();
 	int getSize();
 	int getWidth();

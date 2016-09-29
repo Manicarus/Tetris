@@ -3,9 +3,9 @@
 #include <cstdlib>
 
 Console::Console(
-	std::string title, 
-	Dimension dimension = {100, 30}
-) : size(dimension) {
+	std::string title,
+	Measure measure = {100, 30}
+) : size(measure) {
 	std::string conTitleStr("title ");
 	conTitleStr.append(title);
 

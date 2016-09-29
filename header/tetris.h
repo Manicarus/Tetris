@@ -13,15 +13,15 @@
 class Tetris : Game{
 public:
 	Tetris();
+	~Tetris();
 	bool isArrowInput(int keyboardInput);
 	void update();
 	void render();
 
 private:
-	Tetromino tetromino;
-	Tetrion tetrion;
-	Stack stack;
-	Playfield playfield;
+	Tetromino *tetromino;
+	Tetrion *tetrion;
+	Stack *stack;
 	Console *console;
 };
 
