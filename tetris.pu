@@ -1,47 +1,43 @@
 @startuml
 
-skinparam linetype ortho
+/'skinparam linetype ortho'/
 /'left to right direction'/
 /'top to bottom direction'/
 /'skinparam linetype polyline'/
 
-Game <|.. Tetris
+/'
+자식 객체와의 효과적인 상호작용을 위한 Design Pattern
+Tetris와 Tetriomino, Playfield 사이에
+Component라는 Abstraction Layer가 있을 필요가 있을까?
+'/
 
-Tetris *--> Tetromino
-Tetris *--> Tetrion
-Tetris *--> Stack
-Tetris o--> Console
+/'
+Playfield는 Tetriomino와 상호작용해서 Tetromino를 Stack에 Fix할 것이다.
+이 때는 Tetromino 객체를 인자로 전달해야하는가?
+'/
 
-Imaginary <|-- Tetromino
-Imaginary <|-- Tetrion
-Imaginary <|-- Stack
+Game <|-- Tetris
 
-Console *--> Buffer
+Tetris --> TetrisComponent
 
-Component <|-- Imaginary
-Imaginary o--> Buffer
+TetrisComponent <|--> Tetromino
+TetrisComponent <|--> Tetrion
 
-Coordinate *--> Component
-Measure *--> Component
+TetrisComponent *-- Buffer
+Coordinate -* TetrisComponent
+TetrisComponent *- Dimension
 
-Component <|-- Console
-Component <|-- Buffer
+/'왼쪽에 쓴 객체가 위(왼쪽)에 위치하고,
+오른쪽에 쓴 객체가 아래(오른쪽)에 위치한다.'/
+
+/'hyphen 한 개는 수평선을 긋고,
+hyphen 두 개는 수직선을 긋는다.'/
 
 class Game {
-    + init()
-    + update()
-    + render()
-    + release()
-}
-
-class Console {
-    + render()
-}
-
-class Component {
-    # position: Coordinate
-    # size: Measure
-    # data: void *
+    + {abstract} init()
+    + {abstract} update()
+    + {abstract} render()
+    + {abstract} release()
 }
 
 class Coordinate {
@@ -49,47 +45,48 @@ class Coordinate {
     - y: int
 }
 
-class Measure {
+class Dimension {
     - width: int
     - height: int
-}
-
-class Imaginary {
-    # playfield: Buffer *
-    + sketch()
+    + getSize(): int
 }
 
 class Tetris {
-    - tetromino: Tetromino
-    - tetrion: Tetrion
-    - stack: Stack
-    - console: Console *
+    - tetromino: TetrisComponent
+    - tetrion: TetrisComponent
+}
+
+class TetrisComponent {
+    # position: Coordinate
+    # boundingBox: Dimension
+    # data: dataType *
+    # {static} canvas: Buffer
+
+    + sketch(): void
+    + {abstract} update(): void
 }
 
 class Tetromino {
     - color: enum Color
     - type: enum Type
 
-    + move(enum Direction)
-    + hardDrop()
-    + lock()
-    + rotate()
+    - move(enum Direction)
+    - hardDrop()
+    - lock()
+    - rotate()
 }
 
 class Tetrion {
-
-}
-
-class Stack {
-    + clearLine()
+    - clearLine() : void
+    - fix(Tetromino) : void
 }
 
 class Buffer {
     - front: bool *
     - back: bool *
 
-    + flip()
-    + setData(pos: int, data: bool)
+    + flip() : void
+    + setData(pos: int, data: bool) : void
 }
 
 @enduml
