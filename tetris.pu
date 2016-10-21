@@ -1,9 +1,10 @@
 @startuml
 
-/'skinparam linetype ortho'/
+skinparam handwritten true
+'skinparam linetype ortho
+'skinparam linetype polyline
 /'left to right direction'/
 /'top to bottom direction'/
-/'skinparam linetype polyline'/
 
 /'
 자식 객체와의 효과적인 상호작용을 위한 Design Pattern
@@ -16,29 +17,23 @@ Playfield는 Tetriomino와 상호작용해서 Tetromino를 Stack에 Fix할 것�
 이 때는 Tetromino 객체를 인자로 전달해야하는가?
 '/
 
-Game <|-- Tetris
+Tetris *--> TetrisConsole
+Tetris *--> Tetromino
+Tetris *--> Tetrion
 
-Tetris --> TetrisComponent
+Tetromino --|> TetrisComponent
+Tetrion --|> TetrisComponent
 
-TetrisComponent <|--> Tetromino
-TetrisComponent <|--> Tetrion
-
-TetrisComponent *-- Buffer
-Coordinate -* TetrisComponent
-TetrisComponent *- Dimension
+TetrisConsole <|-- Console
+Console <-- Console
+Console *--> DoubleBuffer
+DoubleBuffer *--> SingleBuffer
 
 /'왼쪽에 쓴 객체가 위(왼쪽)에 위치하고,
 오른쪽에 쓴 객체가 아래(오른쪽)에 위치한다.'/
 
 /'hyphen 한 개는 수평선을 긋고,
 hyphen 두 개는 수직선을 긋는다.'/
-
-class Game {
-    + {abstract} init()
-    + {abstract} update()
-    + {abstract} render()
-    + {abstract} release()
-}
 
 class Coordinate {
     - x: int
@@ -52,41 +47,68 @@ class Dimension {
 }
 
 class Tetris {
-    - tetromino: TetrisComponent
-    - tetrion: TetrisComponent
+    - tetromino : Tetromino *
+    - tetrion : Tetrion *
+    - console : TetrisConsole *
+    + sketch() : void
+
+    'fix, collision check는 여기서 해야한다'
 }
 
 class TetrisComponent {
     # position: Coordinate
-    # boundingBox: Dimension
+    # container: Dimension
     # data: dataType *
-    # {static} canvas: Buffer
 
-    + sketch(): void
-    + {abstract} update(): void
+    # getSize() : int
+    # getDataAt(int) : dataType
+    # {abstract} update(): void
 }
 
 class Tetromino {
     - color: enum Color
     - type: enum Type
+    - {static} library : dataType *
 
-    - move(enum Direction)
-    - hardDrop()
-    - lock()
-    - rotate()
+    + move(enum Direction)
+    + hardDrop()
+    + lock()
+    + rotate()
 }
 
 class Tetrion {
-    - clearLine() : void
-    - fix(Tetromino) : void
+    + clearLine() : void
 }
 
-class Buffer {
-    - front: bool *
-    - back: bool *
+class DoubleBuffer {
+    + front: SingleBuffer *
+    + back: SingleBuffer *
 
     + flip() : void
-    + setData(pos: int, data: bool) : void
+    + isUnchanged(int) : bool
+}
+
+class SingleBuffer {
+    - data: dataType *
+
+    + setDataAt(int, dataType) : void
+    + clear();
+}
+
+interface TetrisConsole {
+    + getKeyboardInput() : int
+}
+
+class Console {
+    - {static} instance : Console *
+    - container : Dimension
+    - buffer : DoubleBuffer
+
+    + {static} getInstance() : Console *
+    + getKBInput() : int
+    + getWidth() : int
+    + sketchAt(int, dataType) : void
+    + render() : void
 }
 
 @enduml
