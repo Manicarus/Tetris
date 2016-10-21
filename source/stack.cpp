@@ -1,15 +1,15 @@
 #include <iostream>
 
-#include "../header/stack.h"
-#include <windows.h>
+#include "../header/Stack.hpp"
 
 #define	O	true
 #define	X	false
 
-Stack::Stack() {
-	Component::x = 2;
-	Component::y = 2;
-
+Stack::Stack(Size paramSize) {
+	
+	size = paramSize;
+	data = new bool[getSize()];
+	
 	for(int rowIndex = CEILING; rowIndex < ROW_NUM; rowIndex++) {
 		layer[rowIndex] = new bool [COL_NUM];
 

@@ -1,44 +1,52 @@
-#include "../header/buffer.h"
+#include "../header/buffer.hpp"
+#include <iostream>
 #include <cstdlib>
 
-Buffer::Buffer(
-	Measure measure = {0, 0},
-	Coordinate coordinate = {0, 0}
-) : Component(measure, coordinate) {
-	data = new bool[2 *getSize()];
-
-	front = (bool *)data;
-	for(int i = 0; i < getSize(); i++) {
-		*(front + i) = false;
-	}
-
-	back  = front + getSize();
-	for(int i = 0; i < getSize(); i++) {
-		*(back + i) = false;
+SingleBuffer::SingleBuffer(Dimension dimension) {	
+	data = new dataType[dimension.getSize()];
+	for(int i = 0; i < dimension.getSize(); i++) {
+		*(data + i) = EMPTY;
 	}
 }
 
-Buffer::~Buffer() {
+SingleBuffer::~SingleBuffer() {
 	if(data != NULL) {
-		delete (bool *)data;
+		delete data;
 	}
 }
 
-int Buffer::getSize(){
-	return size.width * size.height;
+void SingleBuffer::setDataAt(int dataIndex, dataType newData) {
+	*(data + dataIndex) = newData;
 }
 
-int Buffer::getWidth() {
-	return size.width;
+dataType SingleBuffer::getDataAt(int dataIndex) {
+	return *(data + dataIndex);
 }
 
-void Buffer::setData(int pos, bool data) {
-	*(back + pos) = data;
+void SingleBuffer::clear(Dimension dimension) {
+	if(data != NULL) {
+		delete data;
+	}
+	
+	data  = new dataType[dimension.getSize()];
+	for(int i = 0; i < dimension.getSize(); i++) {
+		*(data + i) = false;
+	}
 }
 
-void Buffer::flip() {
-	bool *tmpBuffer;
+DoubleBuffer::DoubleBuffer(Dimension dimension) {
+	front = new SingleBuffer(dimension);
+	back = new SingleBuffer(dimension);
+}
+
+bool DoubleBuffer::isUnchanged(int dataIndex) {
+	return front->getDataAt(dataIndex) == back->getDataAt(dataIndex);
+}
+
+void DoubleBuffer::flip() {
+	SingleBuffer *tmpBuffer;
 	tmpBuffer = front;
 	front = back;
 	back = tmpBuffer;
 }
+

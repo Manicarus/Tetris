@@ -2,27 +2,20 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "../header/tetromino.h"
+#include "../header/tetromino.hpp"
 #include "../header/common.h"
+#include "../header/console.hpp"
 
-// TODOs:
-// 1. Parameterize measure with MACRO VARIABLE
-
-Tetromino::Tetromino(
-    Buffer *buffer = NULL,
-    Measure measure = {4, 4},
-    Coordinate coordinate = {0, 0}
-) : Imaginary(buffer, measure, coordinate) {
+Tetromino::Tetromino(Coordinate coordinate) 
+: TetrisComponent(coordinate, Dimension(4, 4)) {
     srand(static_cast<unsigned int>(time(NULL)));
 
     setType((enum TetrominoType)(rand() % 7));
     setColor((enum Color)(rand() % 7));
-
-    Component::data = TetrominoLibrary[type][0][0];
-}
-
-Tetromino::~Tetromino() {
-
+    
+	for(int i = 0; i < container.getSize(); i++) {
+		data[i] = ((TetrominoLibrary[type][0][0][i]) ? BLOCK : EMPTY);
+	}
 }
 
 void Tetromino::setType(enum TetrominoType _type) {
@@ -53,20 +46,8 @@ enum Color Tetromino::getColor() {
 //	}
 //}
 
-// bool Tetromino::collidesWith(Playfield playfield) {
-//     for(int i = 0; i < 4; i++) {
-//         for(int j = 0; j < 4; j++) {
-// 			// if(TetrominoLibrary[type][0][i][j] && playfield.layer[-playfield.y + y + i][-playfield.x + x + j]) {
-// 			// 	return true;
-// 			// }
-//         }
-//     }
-//
-//     return false;
-// }
-
-enum Direction Tetromino::revertDir(enum Direction dir) {
-	switch(dir) {
+enum Command Tetromino::revert(enum Command command) {
+	switch(command) {
 		case UP:
 			return DOWN;
 		case DOWN:
@@ -95,27 +76,27 @@ enum Direction Tetromino::revertDir(enum Direction dir) {
 //    return false;
 //}
 
-void Tetromino::move(enum Direction dir) {
+void Tetromino::move(enum Command command) {
 	// Originally made by yoonki1207
-	switch(dir) {
+	switch(command) {
 		case LEFT:
-			Component::position.x--;
+			position.setX(position.getX() - 1);
 			break;
 
 		case RIGHT:
-			Component::position.x++;
+			position.setX(position.getX() + 1);
 			break;
 
 		case DOWN:
-			Component::position.y++;
+			position.setY(position.getY() + 1);
 			break;
 
 		case UP:
-			Component::position.y--;
+			position.setY(position.getY() - 1);
 			break;
 	}
 }
-//
+
 //void Tetromino::rotate() {
 //    float tmpY, tmpZ;
 //

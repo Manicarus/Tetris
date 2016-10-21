@@ -1,17 +1,17 @@
-//#include "tetris.h"
+#include "../header/tetris.hpp"
 
 #include <cstdlib>
 #include <windows.h>
 
 int main() {
 	
-//	Tetris tetris;
-//	
-//	while(true) {
-//		tetris.update();
-//		tetris.draw();
-//		Sleep(1000/20);
-//	}
-//	
-//	return 0;
+	Tetris tetris;
+	
+	while(true) {
+		tetris.update();
+		tetris.render();
+//		Sleep(300);
+	}
+	
+	return 0;
 }

@@ -1,32 +1,31 @@
-#include "../header/tetrion.h"
+#include "../header/tetrion.hpp"
 
-Tetrion::Tetrion(
-	Buffer *buffer = NULL,
-	Measure measure = {12, 26},
-	Coordinate coordinate = {0, 0}
-) : Imaginary(buffer, measure, coordinate) {
+Tetrion::Tetrion(Coordinate coordinate)
+ : TetrisComponent(coordinate, Dimension(12, 26)) {
 	const int CEILING = 0;
-	const int FLOOR = measure.height - 1;
+	const int FLOOR = container.getHeight() - 1;
 	const int LEFT = 0;
-	const int RIGHT = measure->width - 1;
+	const int RIGHT = container.getWidth() - 1;
 
-	int pos;
-
-	// TODO: initialize data field
+	int dataIndex;
 
 	for(int i = CEILING; i <= FLOOR; i++) {
 		for(int j = LEFT; j <= RIGHT; j++) {
-			pos = (i + position.x) * size.width + (j + position.y);
+			dataIndex = (i + position.getY()) * container.getWidth() + (j + position.getX());
 			if(i == CEILING || i == FLOOR) {
-				playfield->sketch(pos, true);
+				data[dataIndex] = BLOCK;
 
 			} else {
 				if(j == LEFT || j == RIGHT) {
-					playfield->sketch(pos, true);
+					data[dataIndex] = BLOCK;
 				} else {
-					playfield->sketch(pos, false);
+					data[dataIndex] = FIELD;
 				}
 			}
 		}
 	}
+}
+
+void Tetrion::update() {
+	
 }
