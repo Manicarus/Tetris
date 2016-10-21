@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=23
+UnitCount=21
 
 [VersionInfo]
 Major=1
@@ -50,28 +50,8 @@ ProductVersion=1.0.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
-[Unit2]
-FileName=header\component.h
-CompileCpp=1
-Folder=header
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit3]
-FileName=header\console.h
-CompileCpp=1
-Folder=header
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit5]
-FileName=header\buffer.h
+FileName=header\tetrion.hpp
 CompileCpp=1
 Folder=header
 Compile=1
@@ -81,66 +61,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=header\stack.h
-CompileCpp=1
-Folder=header
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit7]
-FileName=header\tetrion.h
-CompileCpp=1
-Folder=header
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit8]
-FileName=header\tetris.h
-CompileCpp=1
-Folder=header
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit9]
-FileName=header\tetromino.h
-CompileCpp=1
-Folder=header
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit10]
-FileName=testbench\tb_component.cpp
-CompileCpp=1
-Folder=testbench
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CPP) -c tb_component.cpp -o tb_component.o $(CXXFLAGS)
-
-[Unit11]
-FileName=testbench\tb_console.cpp
-CompileCpp=1
-Folder=testbench
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CPP) -c tb_console.cpp -o tb_console.o $(CXXFLAGS)
-
-[Unit12]
 FileName=testbench\tb_tetris.cpp
 CompileCpp=1
 Folder=testbench
@@ -150,17 +70,27 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
-FileName=source\component.cpp
+[Unit7]
+FileName=source\console.cpp
 CompileCpp=1
 Folder=source
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c component.cpp -o component.o $(CXXFLAGS)
+BuildCmd=$(CPP) -c console.cpp -o console.o $(CXXFLAGS)
 
-[Unit16]
+[Unit8]
+FileName=source\main.cpp
+CompileCpp=1
+Folder=source
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+[Unit9]
 FileName=source\buffer.cpp
 CompileCpp=1
 Folder=source
@@ -168,67 +98,97 @@ Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c playfield.cpp -o playfield.o $(CXXFLAGS)
+BuildCmd=$(CPP) -c buffer.cpp -o buffer.o $(CXXFLAGS)
 
-[Unit17]
-FileName=source\stack.cpp
+[Unit10]
+FileName=source\tetrion.cpp
 CompileCpp=1
 Folder=source
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CPP) -c tetrion.cpp -o tetrion.o $(CXXFLAGS)
+
+[Unit11]
+FileName=source\tetris.cpp
+CompileCpp=1
+Folder=source
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CPP) -c tetris.cpp -o tetris.o $(CXXFLAGS)
+
+[Unit13]
+FileName=testbench\tb_tetromino.cpp
+CompileCpp=1
+Folder=testbench
 Compile=0
 Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CPP) -c tb_tetromino.cpp -o tb_tetromino.o $(CXXFLAGS)
+
+[Unit16]
+FileName=testbench\tb_tetris_component.cpp
+CompileCpp=1
+Folder=testbench
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CPP) -c tb_tetris_component.cpp -o tb_tetris_component.o $(CXXFLAGS)
+
+[Unit17]
+FileName=header\tetris_component.hpp
+CompileCpp=1
+Folder=header
+Compile=1
+Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit18]
-FileName=source\tetrion.cpp
+FileName=source\tetris_component.cpp
 CompileCpp=1
 Folder=source
-Compile=0
-Link=0
+Compile=1
+Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CPP) -c tetris_component.cpp -o tetris_component.o $(CXXFLAGS)
 
 [Unit19]
-FileName=source\tetris.cpp
+FileName=header\console.hpp
 CompileCpp=1
-Folder=source
-Compile=0
-Link=0
+Folder=header
+Compile=1
+Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=source\tetromino.cpp
+FileName=header\tetris_component_mediator.hpp
 CompileCpp=1
-Folder=source
+Folder=header
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c tetromino.cpp -o tetromino.o $(CXXFLAGS)
+BuildCmd=
 
 [Unit23]
-FileName=source\imaginary.cpp
+FileName=source\tetris_component.cpp
 CompileCpp=1
 Folder=source
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
-
-[Unit24]
-FileName=source\tetromino.cpp
-CompileCpp=1
-Folder=source
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CPP) -c tetris_component.cpp -o tetris_component.o $(CXXFLAGS)
 
 [Unit1]
 FileName=header\common.h
@@ -240,18 +200,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
-FileName=source\console.cpp
-CompileCpp=1
-Folder=source
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CPP) -c console.cpp -o console.o $(CXXFLAGS)
-
 [Unit4]
-FileName=header\game.h
+FileName=header\tetromino.hpp
 CompileCpp=1
 Folder=header
 Compile=1
@@ -261,17 +211,27 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit15]
-FileName=source\main.cpp
+FileName=testbench\TestbenchStack.cpp
 CompileCpp=1
-Folder=source
+Folder=testbench
 Compile=0
 Link=0
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+BuildCmd=$(CPP) -c TBStack.cpp -o TBStack.o $(CXXFLAGS)
 
 [Unit21]
-FileName=testbench\tb_tetromino.cpp
+FileName=source\tetris_component_mediator.cpp
+CompileCpp=1
+Folder=source
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=testbench\tb_terion.hpp
 CompileCpp=1
 Folder=testbench
 Compile=1
@@ -280,8 +240,51 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit22]
-FileName=header\imaginary.h
+[Unit25]
+FileName=testbench\TBStack.cpp
+
+[Unit24]
+FileName=header\Fundamentals.hpp
+CompileCpp=1
+Folder=header
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit2]
+FileName=header\buffer.hpp
+CompileCpp=1
+Folder=header
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
+FileName=source\tetromino.cpp
+CompileCpp=1
+Folder=source
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CPP) -c tetromino.cpp -o tetromino.o $(CXXFLAGS)
+
+[Unit5]
+FileName=testbench\tb_console.cpp
+CompileCpp=1
+Folder=testbench
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CPP) -c tb_console.cpp -o tb_console.o $(CXXFLAGS)
+
+[Unit14]
+FileName=header\fundamentals.hpp
 CompileCpp=1
 Folder=header
 Compile=1

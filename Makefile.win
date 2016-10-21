@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = source/component.o source/playfield.o source/tetromino.o testbench/tb_tetromino.o
-LINKOBJ  = source/component.o source/playfield.o source/tetromino.o testbench/tb_tetromino.o
+OBJ      = source/console.o source/main.o source/buffer.o source/tetrion.o source/tetris.o source/tetromino.o source/tetris_component.o
+LINKOBJ  = source/console.o source/main.o source/buffer.o source/tetrion.o source/tetris.o source/tetromino.o source/tetris_component.o
 LIBS     = -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
 INCS     = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -24,14 +24,23 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-source/component.o: source/component.cpp
-	$(CPP) -c source/component.cpp -o source/component.o $(CXXFLAGS)
+source/console.o: source/console.cpp
+	$(CPP) -c source/console.cpp -o source/console.o $(CXXFLAGS)
 
-source/playfield.o: source/playfield.cpp
-	$(CPP) -c source/playfield.cpp -o source/playfield.o $(CXXFLAGS)
+source/main.o: source/main.cpp
+	$(CPP) -c source/main.cpp -o source/main.o $(CXXFLAGS)
+
+source/buffer.o: source/buffer.cpp
+	$(CPP) -c source/buffer.cpp -o source/buffer.o $(CXXFLAGS)
+
+source/tetrion.o: source/tetrion.cpp
+	$(CPP) -c source/tetrion.cpp -o source/tetrion.o $(CXXFLAGS)
+
+source/tetris.o: source/tetris.cpp
+	$(CPP) -c source/tetris.cpp -o source/tetris.o $(CXXFLAGS)
 
 source/tetromino.o: source/tetromino.cpp
 	$(CPP) -c source/tetromino.cpp -o source/tetromino.o $(CXXFLAGS)
 
-testbench/tb_tetromino.o: testbench/tb_tetromino.cpp
-	$(CPP) -c testbench/tb_tetromino.cpp -o testbench/tb_tetromino.o $(CXXFLAGS)
+source/tetris_component.o: source/tetris_component.cpp
+	$(CPP) -c source/tetris_component.cpp -o source/tetris_component.o $(CXXFLAGS)
