@@ -1,10 +1,8 @@
-#ifndef __GAME_H__
-#define __GAME_H__
+#ifndef __GAME_HPP__
+#define __GAME_HPP__
 
 class Game {
 public:
-	Game();
-	~Game();
 	virtual void update() = 0;
 	virtual void render() = 0;
 };

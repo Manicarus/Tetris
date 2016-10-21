@@ -1,9 +1,9 @@
-#ifndef __TETROMINO_H__
-#define __TETROMINO_H__
+#ifndef __TETROMINO_HPP__
+#define __TETROMINO_HPP__
 
-#include "imaginary.h"
+#include "tetris_component.hpp"
 
-enum Direction {
+enum Command {
 	UP = 72,
 	DOWN = 80,
 	LEFT = 75,
@@ -37,16 +37,15 @@ enum Color {
 	YELLOW
 };
 
-class Tetromino : public Imaginary {
+class Tetromino : public TetrisComponent {
 public:
-	Tetromino(
-		Buffer *,
-		Measure,
-	    Coordinate
-	);
-	~Tetromino();
+	Tetromino(Coordinate);
+	void update();
 
-    void move(enum Direction dir);
+	enum TetrominoType type;
+    enum Color color;
+    
+    void move(enum Command);
     void rotate();
 
     void setType(enum TetrominoType type);
@@ -56,13 +55,7 @@ public:
     enum Color getColor();
 
     void setVisibility(bool isVisible);
-    // bool collidesWith(Playfield playfield);
-	enum Direction revertDir(enum Direction dir);
-
-private:
-
-    enum TetrominoType type;
-    enum Color color;
+	static enum Command revert(enum Command);
 };
 
 #endif

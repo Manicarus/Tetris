@@ -1,5 +1,5 @@
-#ifndef __STACK_H__
-#define __STACK_H__
+#ifndef __STACK_HPP__
+#define __STACK_HPP__
 
 #define ROW_NUM			26
 #define COL_NUM			12
@@ -9,21 +9,19 @@
 
 #define RIGHTMOST_COL	(COL_NUM - 1)
 
-#include <conio.h>
-#include "component.h"
+#include "Component.hpp"
 
-class Stack : Imaginary {
+class Stack : Component {
 public:
-	Stack();
+	Stack(Size);
 	~Stack();
 
     void clear();
-    void draw();
     bool *layer[ROW_NUM];
 
 private:
+	bool *tetrion;
 
-	void clearLin(int row);
 	bool isLayerFull(int row);
 	void drawLayer(int row);
 };
