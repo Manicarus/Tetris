@@ -5,51 +5,40 @@ blocks(move)=1
 blocks(set)=2
 */
 
-//2016-08-27 20:38
-//ì½”ë“œê°€ ì—‰ì¼œ ìƒˆë¡œìš´ 3ë²ˆì§¸ í…ŒíŠ¸ë¦¬ìŠ¤ ì œì‘
-//new_block(); ì˜¤ë¥˜
+//2016-08-28 14:36
+//6¹ø ºí·° È¸Àü ¿¡·¯
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
 #include <conio.h>
-#include <Windows.h>
+#include <time.h>
 
 #define COL GetStdHandle(STD_OUTPUT_HANDLE)
-#define BLACK         SetConsoleTextAttribute(COL,0x0000); //ê²€ì •ìƒ‰ 
-#define DARK_BLUE     SetConsoleTextAttribute(COL,0x0001); //íŒŒë€ìƒ‰ 
-#define GREEN         SetConsoleTextAttribute(COL,0x0002); //ë…¹ìƒ‰ 
-#define BLUE_GREEN    SetConsoleTextAttribute(COL,0x0003); //ì²­ë…¹ìƒ 
-#define BLOOD         SetConsoleTextAttribute(COL,0x0004); //ê²€ë¶‰ì€ìƒ‰ 
-#define PURPLE        SetConsoleTextAttribute(COL,0x0005); //ë³´ë¼ìƒ‰ 
-#define GOLE          SetConsoleTextAttribute(COL,0x0006); //ê¸ˆìƒ‰ ìƒ‰ 
-#define ORIGINAL      SetConsoleTextAttribute(COL,0x0007); //ë°ì€íšŒìƒ‰ 
-#define GRAY          SetConsoleTextAttribute(COL,0x0008); //íšŒìƒ‰ 
-#define BLUE          SetConsoleTextAttribute(COL,0x0009); //íŒŒë€ìƒ‰ 
-#define HIGH_GREEN    SetConsoleTextAttribute(COL,0x000a); //ì—°ë‘ìƒ‰ 
-#define SKY_BLUE      SetConsoleTextAttribute(COL,0x000b); //í•˜ëŠ˜ìƒ‰ 
-#define RED           SetConsoleTextAttribute(COL,0x000c); //ë¹¨ê°„ìƒ‰ 
-#define PLUM          SetConsoleTextAttribute(COL,0x000d); //ìì£¼ìƒ‰ 
-#define YELLOW        SetConsoleTextAttribute(COL,0x000e); //ë…¸ë€ 
+#define BLACK         SetConsoleTextAttribute(COL,0x0000); //°ËÁ¤»ö 
+#define DARK_BLUE     SetConsoleTextAttribute(COL,0x0001); //ÆÄ¶õ»ö 
+#define GREEN         SetConsoleTextAttribute(COL,0x0002); //³ì»ö 
+#define BLUE_GREEN    SetConsoleTextAttribute(COL,0x0003); //Ã»³ì»ı 
+#define BLOOD         SetConsoleTextAttribute(COL,0x0004); //°ËºÓÀº»ö 
+#define PURPLE        SetConsoleTextAttribute(COL,0x0005); //º¸¶ó»ö 
+#define GOLE          SetConsoleTextAttribute(COL,0x0006); //±İ»ö »ö 
+#define ORIGINAL      SetConsoleTextAttribute(COL,0x0007); //¹àÀºÈ¸»ö 
+#define GRAY          SetConsoleTextAttribute(COL,0x0008); //È¸»ö 
+#define BLUE          SetConsoleTextAttribute(COL,0x0009); //ÆÄ¶õ»ö 
+#define HIGH_GREEN    SetConsoleTextAttribute(COL,0x000a); //¿¬µÎ»ö 
+#define SKY_BLUE      SetConsoleTextAttribute(COL,0x000b); //ÇÏ´Ã»ö 
+#define RED           SetConsoleTextAttribute(COL,0x000c); //»¡°£»ö 
+#define PLUM          SetConsoleTextAttribute(COL,0x000d); //ÀÚÁÖ»ö 
+#define YELLOW        SetConsoleTextAttribute(COL,0x000e); //³ë¶õ 
 
 #define LEFT 75 // Go Left
 #define RIGHT 77 // Go Right
 #define UP 72 // Turn
 #define DOWN 80 // Quick Drop
-#define MOVEAR 224 // í‚¤ë³´ë“œ í™”ì‚´í‘œ ê°’ 'MoveArrow'
+#define MOVEAR 224 // Å°º¸µå È­»ìÇ¥ °ª 'MoveArrow'
 #define SPACE 32 // Hard Drop
 #define ESC 27 // Exit The Game
-
-
-int blocks[7][4][4][4]= { // type turn y x
-	{{0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0},{0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0},{0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0},{0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0}},
-	{{0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},{0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0},{0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},{0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0}},
-	{{0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0},{0,0,0,0,0,0,1,0,0,1,1,0,0,1,0,0},{0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0},{0,0,0,0,0,0,1,0,0,1,1,0,0,1,0,0}},
-	{{0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0},{0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0},{0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0},{0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0}},
-	{{0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0},{0,0,0,0,1,1,0,0,0,1,0,0,0,1,0,0},{0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0},{0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,0}},
-	{{0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0},{0,0,0,0,0,1,0,0,0,1,0,0,1,1,0,0},{0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0},{0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,0}},
-	{{0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0},{0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,0},{0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0},{0,0,0,0,0,1,0,0,1,1,0,0,0,1,0,0}}
-};
 
 int walls[25][12]= { //(-1) // y x
 	{-1,0,0,0,0,0,0,0,0,0,0,-1},
@@ -85,13 +74,16 @@ int wall_y;
 
 int b_turn;
 int b_type;
-int b_x=4;//ë°°ì—´ìƒ
+int bb_type;
+int b_x=4;//¹è¿­»ó
 int b_y=-2;
 int enable_move_left=1;
 int enable_move_right=1;
 int enable_move_down=1;
 int enable_move_up=1;
 int new_b=1;
+int asd=100;
+
 
 
 void gotoxy(int x,int y) {
@@ -130,16 +122,19 @@ void check_move();
 void check_crash();
 void check_wall();
 void new_block();
-
+void set_block();
+void colors_(int dir);
 
 
 int main() {                                                    /*------------------------------main function------------------------------*/
 	setcursortype(NOCURSOR);
 	create_world();
 	int i;
+	srand((unsigned)time(NULL));
 	for(;;) {
 		ModTick();
 		check_wall();//checck_crash
+		set_block();
 		new_block();
 		check_move();//move_block();
 		i++;
@@ -152,6 +147,8 @@ int main() {                                                    /*--------------
 		printf("%3d",b_x);
 		gotoxy(0,1);
 		printf("%3d",b_y);
+		gotoxy(0,3);
+		printf("%3d",b_type);
 	}
 
 
@@ -167,7 +164,7 @@ void create_world() {
 
 			if(walls[i][j]==-1) {
 				gotoxy(wall_x+j,wall_y+i);
-				printf("â–©");
+				printf("¢Ì");
 			}
 		}
 	}
@@ -176,9 +173,27 @@ void create_world() {
 void check_move() {
 	int k;
 	if(kbhit()) {
-		while(k=getch()==224)break;
 		k=getch();
-		move_block(k);//gotoxy(0,0);printf("%d",k);
+		if(k==224){
+			while(k==224)break;
+			k=getch();
+			move_block(k);//gotoxy(0,0);printf("%d",k);
+		}else if(k==32){                              /*-------------SPACE BAR-------------*/
+			
+		}else{}
+	}
+}
+
+void set_block(){
+	int i,j;
+	if(!enable_move_down){
+		for(i=0;i<25;i++){
+			for(j=0;j<12;j++){
+				if(walls[i][j]==1){
+					walls[i][j]=2;
+				}
+			}
+		}
 	}
 }
 
@@ -187,14 +202,17 @@ void check_wall(){
 	for(j=0;j<24;j++){
 		if(walls[j][1]==1){
 			enable_move_left=0;
+			enable_move_up=0;
 		}else if(walls[j][10]==1){
 			enable_move_right=0;
+			enable_move_up=0;
 		}
 	}
 	for(j=0;j<12;j++){
 		if(walls[23][j]==1){
 			enable_move_down=0;
 			new_b=1;
+			asd=0;
 		}
 	}
 	s=0;
@@ -203,17 +221,21 @@ void check_wall(){
 		s=s+walls[j][1];
 		d=d+walls[j][10];
 	}
-	if(s==0)enable_move_left=1;
-	if(d==0)enable_move_right=1;
+	if(s==0){enable_move_left=1;enable_move_up=1;}
+	if(d==0){enable_move_right=1;enable_move_up=1;}
 }
 
 void new_block(){
-	if(new_b==1){
+	if(new_b){
 		b_turn=0;
-		b_type=0;
+		bb_type=b_type;
+		b_type=rand()%7;
 		b_x=4;
 		b_y=-2;
 		enable_move_down=1;
+		enable_move_left=1;
+		enable_move_right=1;
+		enable_move_up=1;
 		new_b=0;
 	}
 }
@@ -250,17 +272,19 @@ void ModTick() {
 				} else if (walls[y][x]==-1) {
 
 					gotoxy(wall_x+x, wall_y+y);
-					printf("â–©");
+					printf("¢Ì");
 
 				} else if (walls[y][x]==1) {
 
 					gotoxy(wall_x+x, wall_y+y);
-					printf("â–£");
+					colors_(b_type);
+					printf("¢Ã");
 
-				} else if (wall_x+x,wall_y+y) {
+				} if (walls[y][x]==2) {
 
 					gotoxy(wall_x+x, wall_y+y);
-					printf("â– ");
+					colors_(bb_type);
+					printf("¡á");
 
 				}
 			}
@@ -274,96 +298,33 @@ void ModTick() {
 	}
 }
 
-
-
-
-void move_block(int move) {
-	int i,j;
-
-	switch(move) {
-		case LEFT:
-			if(enable_move_left==1) {
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i-1]=1;
-						}
-					}
-				}
-				b_x--;
-			}
+void colors_(int dir) {
+	switch (dir) {
+		case 0:
+			YELLOW;
 			break;
-
-		case RIGHT:
-			if(enable_move_right==1) {
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i+1]=1;
-						}
-					}
-				}
-				b_x++;
-			}
+		case 1:
+			SKY_BLUE;
 			break;
-
-		case DOWN://dorp
-			if(enable_move_down==1) {
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j+1][b_x+i]=1;
-						}
-					}
-				}
-				b_y++;
-			}
+		case 2:
+			HIGH_GREEN;
 			break;
-
-		case UP://turn
-			if(enable_move_up==1) {
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=0;
-						}
-					}
-				}
-				b_turn=(b_turn+1)%4;
-				for(i=0; i<4; i++) {
-					for(j=0; j<4; j++) {
-						if (blocks[b_type][b_turn][i][j]==1) {
-							walls[b_y+j][b_x+i]=1;
-						}
-					}
-				}
-			}
+		case 3:
+			RED;
+			break;
+		case 4:
+			BLUE;
+			break;
+		case 5:
+			BLOOD;
+			break;
+		case 6:
+			PLUM;
 			break;
 	}
+
+
 }
-
-
 
 
 

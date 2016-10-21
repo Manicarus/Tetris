@@ -1,4 +1,4 @@
-//ì½”ë“œê°€ ë”ëŸ¬ì›Œì ¸ì„œ ë‹¤ì‹œì§­ë‹ˆë‹¤...
+//ÄÚµå°¡ ´õ·¯¿öÁ®¼­ ´Ù½ÃÂ¬´Ï´Ù...
 
 /*
 walls=1
@@ -14,27 +14,27 @@ blocks(set)=2
 #include <stdlib.h>
 
 #define COL GetStdHandle(STD_OUTPUT_HANDLE)
-#define BLACK         SetConsoleTextAttribute(COL,0x0000); //ê²€ì •ìƒ‰ 
-#define DARK_BLUE     SetConsoleTextAttribute(COL,0x0001); //íŒŒë€ìƒ‰ 
-#define GREEN         SetConsoleTextAttribute(COL,0x0002); //ë…¹ìƒ‰ 
-#define BLUE_GREEN    SetConsoleTextAttribute(COL,0x0003); //ì²­ë…¹ìƒ 
-#define BLOOD         SetConsoleTextAttribute(COL,0x0004); //ê²€ë¶‰ì€ìƒ‰ 
-#define PURPLE        SetConsoleTextAttribute(COL,0x0005); //ë³´ë¼ìƒ‰ 
-#define GOLE          SetConsoleTextAttribute(COL,0x0006); //ê¸ˆìƒ‰ ìƒ‰ 
-#define ORIGINAL      SetConsoleTextAttribute(COL,0x0007); //ë°ì€íšŒìƒ‰ 
-#define GRAY          SetConsoleTextAttribute(COL,0x0008); //íšŒìƒ‰ 
-#define BLUE          SetConsoleTextAttribute(COL,0x0009); //íŒŒë€ìƒ‰ 
-#define HIGH_GREEN    SetConsoleTextAttribute(COL,0x000a); //ì—°ë‘ìƒ‰ 
-#define SKY_BLUE      SetConsoleTextAttribute(COL,0x000b); //í•˜ëŠ˜ìƒ‰ 
-#define RED           SetConsoleTextAttribute(COL,0x000c); //ë¹¨ê°„ìƒ‰ 
-#define PLUM          SetConsoleTextAttribute(COL,0x000d); //ìì£¼ìƒ‰ 
-#define YELLOW        SetConsoleTextAttribute(COL,0x000e); //ë…¸ë€ 
+#define BLACK         SetConsoleTextAttribute(COL,0x0000); //°ËÁ¤»ö 
+#define DARK_BLUE     SetConsoleTextAttribute(COL,0x0001); //ÆÄ¶õ»ö 
+#define GREEN         SetConsoleTextAttribute(COL,0x0002); //³ì»ö 
+#define BLUE_GREEN    SetConsoleTextAttribute(COL,0x0003); //Ã»³ì»ı 
+#define BLOOD         SetConsoleTextAttribute(COL,0x0004); //°ËºÓÀº»ö 
+#define PURPLE        SetConsoleTextAttribute(COL,0x0005); //º¸¶ó»ö 
+#define GOLE          SetConsoleTextAttribute(COL,0x0006); //±İ»ö »ö 
+#define ORIGINAL      SetConsoleTextAttribute(COL,0x0007); //¹àÀºÈ¸»ö 
+#define GRAY          SetConsoleTextAttribute(COL,0x0008); //È¸»ö 
+#define BLUE          SetConsoleTextAttribute(COL,0x0009); //ÆÄ¶õ»ö 
+#define HIGH_GREEN    SetConsoleTextAttribute(COL,0x000a); //¿¬µÎ»ö 
+#define SKY_BLUE      SetConsoleTextAttribute(COL,0x000b); //ÇÏ´Ã»ö 
+#define RED           SetConsoleTextAttribute(COL,0x000c); //»¡°£»ö 
+#define PLUM          SetConsoleTextAttribute(COL,0x000d); //ÀÚÁÖ»ö 
+#define YELLOW        SetConsoleTextAttribute(COL,0x000e); //³ë¶õ 
 
 #define LEFT 75 // Go Left
 #define RIGHT 77 // Go Right
 #define UP 72 // Turn
 #define DOWN 80 // Quick Drop
-#define MOVEAR 224 // í‚¤ë³´ë“œ í™”ì‚´í‘œ ê°’ 'MoveArrow'
+#define MOVEAR 224 // Å°º¸µå È­»ìÇ¥ °ª 'MoveArrow'
 #define SPACE 32 // Hard Drop
 #define ESC 27 // Exit The Game
 
@@ -102,8 +102,9 @@ void spawn_block(int x, int y);
 void create_walls(void);
 int check_crash(void);
 
-typedef enum { NOCURSOR, SOLIDCURSOR, NORMALCURSOR } CURSOR_TYPE; //ì»¤ì„œì•ˆë³´ì´ê²Œí•˜ëŠ” í•¨ìˆ˜ì— ì‚¬ìš©ë˜ëŠ” ì—´ê±°í˜•
-void setcursortype(CURSOR_TYPE c) { //ì»¤ì„œ ì•ˆë³´ì´ê²Œ í•˜ëŠ” í•¨ìˆ˜
+typedef enum { NOCURSOR, SOLIDCURSOR, NORMALCURSOR } CURSOR_TYPE; //Ä¿¼­¾Èº¸ÀÌ°ÔÇÏ´Â ÇÔ¼ö¿¡ »ç¿ëµÇ´Â ¿­°ÅÇü
+
+void setcursortype(CURSOR_TYPE c) { //Ä¿¼­ ¾Èº¸ÀÌ°Ô ÇÏ´Â ÇÔ¼ö
 	CONSOLE_CURSOR_INFO CurInfo;
 
 	switch (c) {
@@ -130,13 +131,15 @@ void gotoxy(int x,int y){
 
 
 
-int main(){                               /*------------------------------ main function ------------------------------*/
+int main(){
 	//12,0
 	int i;
 	
 	setcursortype(NOCURSOR);
 	srand((unsigned)time(NULL));
+	
 	create_walls();
+	
 	for(;;){
 		
 		for(i=0;i<10;i++){
@@ -147,10 +150,9 @@ int main(){                               /*------------------------------ main 
 		create_walls();
 		Sleep(500);block_y+=1;
 	}
-	
-	
+		
 	getch();
-}                                         /*------------------------------ main function ------------------------------*/
+}
 
 
 
@@ -161,8 +163,8 @@ void spawn_block(int x,int y){
 	
 		for(j=0;j<4;j++){
 			
-			if(blocks[block_type][block_turn][i][j]==1){ // ë¸”ëŸ­ê°’ì€ ê°€ë¡œ j ì„¸ë¡œ i 
-				//gotoxy(x+j,y+i);printf("â–£");            // ì¢Œí‘œê°’ì€ ê°€ë¡œê°€ xë¯€ë¡œ jì—´ì´ ë¨¼ì € ì¶œë ¥ë˜ì–´ ê°’ì„ ì´ë ‡ê²Œ ì •í•¨ 
+			if(blocks[block_type][block_turn][i][j]==1){ // ºí·°°ªÀº °¡·Î j ¼¼·Î i 
+				//gotoxy(x+j,y+i);printf("¢Ã");            // ÁÂÇ¥°ªÀº °¡·Î°¡ x¹Ç·Î j¿­ÀÌ ¸ÕÀú Ãâ·ÂµÇ¾î °ªÀ» ÀÌ·¸°Ô Á¤ÇÔ 
 				walls[y+i][x+j]=0;
 				walls[y+i][x+j]=1;
 				block_cx=x+j;
@@ -191,12 +193,12 @@ void create_walls(void){
 				
 				if(walls[y][x]==-1){
 					
-					gotoxy(x+8,y);printf("â–©"); 
+					gotoxy(x+8,y);printf("¢Ì"); 
 					
 				}else if(walls[y][x]==1){
 					
 				
-					gotoxy(x+8,y);printf("â–£");
+					gotoxy(x+8,y);printf("¢Ã");
 					
 				}else if(walls[y][x]==0){
 					
