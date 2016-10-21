@@ -1,19 +1,12 @@
-#include "../header/tetromino.h"
-#include "../header/buffer.h"
+#include "../header/tetromino.hpp"
+#include "../header/buffer.hpp"
 #include <iostream>
 
 int main() {
-	Buffer playfield({12, 26});
-	Tetromino tetromino(&playfield);
+	TetrisComponent *tetromino = new Tetromino(Coordinate(0, 0));
 
-	tetromino.sketch();
-
-	for(int i = 0; i < 26; i++) {
-		for(int j = 0; j < 12; j++) {
-			std::cout << (playfield.back[i * 12 + j] ? "O" : "X");
-		}
-		std::cout << std::endl;
-	}
+	tetromino->sketch();
+	tetromino->getCanvas()->print();
 
 	return 0;
 }
