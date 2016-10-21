@@ -1,0 +1,114 @@
+@startuml
+
+skinparam handwritten true
+'skinparam linetype ortho
+'skinparam linetype polyline
+/'left to right direction'/
+/'top to bottom direction'/
+
+/'
+자식 객체와의 효과적인 상호작용을 위한 Design Pattern
+Tetris와 Tetriomino, Playfield 사이에
+Component라는 Abstraction Layer가 있을 필요가 있을까?
+'/
+
+/'
+Playfield는 Tetriomino와 상호작용해서 Tetromino를 Stack에 Fix할 것이다.
+이 때는 Tetromino 객체를 인자로 전달해야하는가?
+'/
+
+Tetris *--> TetrisConsole
+Tetris *--> Tetromino
+Tetris *--> Tetrion
+
+Tetromino --|> TetrisComponent
+Tetrion --|> TetrisComponent
+
+TetrisConsole <|-- Console
+Console <-- Console
+Console *--> DoubleBuffer
+DoubleBuffer *--> SingleBuffer
+
+/'왼쪽에 쓴 객체가 위(왼쪽)에 위치하고,
+오른쪽에 쓴 객체가 아래(오른쪽)에 위치한다.'/
+
+/'hyphen 한 개는 수평선을 긋고,
+hyphen 두 개는 수직선을 긋는다.'/
+
+class Coordinate {
+    - x: int
+    - y: int
+}
+
+class Dimension {
+    - width: int
+    - height: int
+    + getSize(): int
+}
+
+class Tetris {
+    - tetromino : Tetromino *
+    - tetrion : Tetrion *
+    - console : TetrisConsole *
+    + sketch() : void
+
+    'fix, collision check는 여기서 해야한다'
+}
+
+class TetrisComponent {
+    # position: Coordinate
+    # container: Dimension
+    # data: dataType *
+
+    # getSize() : int
+    # getDataAt(int) : dataType
+    # {abstract} update(): void
+}
+
+class Tetromino {
+    - color: enum Color
+    - type: enum Type
+    - {static} library : dataType *
+
+    + move(enum Direction)
+    + hardDrop()
+    + lock()
+    + rotate()
+}
+
+class Tetrion {
+    + clearLine() : void
+}
+
+class DoubleBuffer {
+    + front: SingleBuffer *
+    + back: SingleBuffer *
+
+    + flip() : void
+    + isUnchanged(int) : bool
+}
+
+class SingleBuffer {
+    - data: dataType *
+
+    + setDataAt(int, dataType) : void
+    + clear();
+}
+
+interface TetrisConsole {
+    + getKeyboardInput() : int
+}
+
+class Console {
+    - {static} instance : Console *
+    - container : Dimension
+    - buffer : DoubleBuffer
+
+    + {static} getInstance() : Console *
+    + getKBInput() : int
+    + getWidth() : int
+    + sketchAt(int, dataType) : void
+    + render() : void
+}
+
+@enduml

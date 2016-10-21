@@ -1,0 +1,46 @@
+# Project: Tetris
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = source/console.o source/main.o source/buffer.o source/tetrion.o source/tetris.o source/tetromino.o source/tetris_component.o
+LINKOBJ  = source/console.o source/main.o source/buffer.o source/tetrion.o source/tetris.o source/tetromino.o source/tetris_component.o
+LIBS     = -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+INCS     = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = Tetris.exe
+CXXFLAGS = $(CXXINCS) -g3 -std=c++11
+CFLAGS   = $(INCS) -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+source/console.o: source/console.cpp
+	$(CPP) -c source/console.cpp -o source/console.o $(CXXFLAGS)
+
+source/main.o: source/main.cpp
+	$(CPP) -c source/main.cpp -o source/main.o $(CXXFLAGS)
+
+source/buffer.o: source/buffer.cpp
+	$(CPP) -c source/buffer.cpp -o source/buffer.o $(CXXFLAGS)
+
+source/tetrion.o: source/tetrion.cpp
+	$(CPP) -c source/tetrion.cpp -o source/tetrion.o $(CXXFLAGS)
+
+source/tetris.o: source/tetris.cpp
+	$(CPP) -c source/tetris.cpp -o source/tetris.o $(CXXFLAGS)
+
+source/tetromino.o: source/tetromino.cpp
+	$(CPP) -c source/tetromino.cpp -o source/tetromino.o $(CXXFLAGS)
+
+source/tetris_component.o: source/tetris_component.cpp
+	$(CPP) -c source/tetris_component.cpp -o source/tetris_component.o $(CXXFLAGS)
